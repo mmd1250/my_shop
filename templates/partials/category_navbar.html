@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <style>
+        .nav ul li a{
+            text-decoration: none;
+            color: #000000;
+            display: block;
+            transition: .3s background-color;
+            padding: 0 24px;
+        }
+        .nav ul li a:hover{
+            background-color: #5c89c7;
+            color: #ffffff;
+        }
+        .nav a{
+            border-bottom: none;
+        }
+        .nav li ul{
+            position: absolute;
+            display: none;
+            width: inherit;
+        }
+        .nav li:hover ul{
+            display: block;
+        }
+        .nav ul li ul li{
+            display: block;
+            float: none !important;
+            height: auto;
+            line-height: 34px;
+        }
+        .nav ul li ul li ul{
+            position: absolute;
+            right: 100%;
+            top: 0;
+            display: none !important;
+        }
+        .nav ul > li > ul > li:hover > ul{
+            display: block !important;
+        }
+        .nav ul > li > ul > li > ul > li:hover >ul{
+            display: block !important;
+        }
+
+        {#.nav1{#}
+            {#background-color: gray;#}
+        {#    color: orangered !important;#}
+        {#    background-size: 40px;#}
+        {#}#}
+        {#.nav1:hover{#}
+        {#    background-color: darkgray;#}
+        {#    color: black !important;#}
+        {#}#}
+        {#.nav2{#}
+        {#    position: fixed;#}
+        {#    top: auto;#}
+        {#    left: auto;#}
+        {#    display: flex;#}
+        {#}#}
+    </style>
+</head>
+<body>
+
+
+    <div class="collapse navbar-collapse nav" id="navbarResponsive">
+                        <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 nav1" href="{% url 'blog:home' %}">خانه</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 nav1" href="{% url 'account:home' %}" target="_blank">حساب کاربری</a></li>
+
+                        {% for cat in category %}
+                            {% if cat.parent == None %}
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'blog:category' cat.slug %}">{{ cat.title }}</a>
+                                {% if cat.children.active %}
+                                    {% include 'partials/category_loop.html' %}
+                                {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+    <form class="form-inline" action="{% url 'blog:search' %}">
+        <input type="text" name="q" class="form-control" placeholder="جستجوی متن">
+        <button class="btn btn-success" style="padding: 8px;border-radius: 5px;margin-right: 5px">جستجو</button>
+    </form>
+    </div>
+</body>
+</html>
+
+
